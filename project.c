@@ -1,5 +1,14 @@
 #include<stdio.h>
 
+int counter = 0;
+
+struct process{
+	int arvTime;
+	int burstTime;
+	int priority = 0;
+};
+
+
 int main(){
 	printf("This is fork test.\n");
 	int id = fork();
