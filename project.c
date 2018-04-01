@@ -10,6 +10,7 @@ struct process{
 	int priority ;
 };
 
+void burstAndArrivalSort(struct process pros[]);
 
 int main(){
 
@@ -21,6 +22,7 @@ int main(){
 		scanf("%d",&no_process);
 	}
 
+	//init the sturct.
 	struct process pros[no_process];
 
 	//takeing input 'arvTime' and 'burstTime' for all the precesses.
@@ -49,30 +51,46 @@ int main(){
 			if(pros[i].burstTime > -1)
 				break;
 		}
-		
 	}
 
+	burstAndArrivalSort(pros);
 
-	//Print the arrival time and burst time of all the process.
 	for(int i=0; i<no_process; i++){
-		printf("%d Arrival %d Burst %d\n",i+1, pros[i].arvTime, pros[i].burstTime);
+		printf("%d arival time : %d  burstTime : %d\n", i+1, pros[i].arvTime, pros[i].burstTime);
 	}
-
-
-	// printf("This is fork test.\n");
-	// int id = fork();
-	// wait();
-	// if(id == 0){
-	// 	printf("THis is child with id %d and parent  wiht id %d\n",getpid(),getppid());
-	// 	for(int i =0;i<10;i++){
-	// 		sleep(1);
-	// 		printf("%d\n",i);
-	// 	}
-	// }else if(id > 0){
-	// 	printf("THis is parent with id %d and parent  wiht id %d\n",getpid(),getppid());
-	// }else{
-	// 	printf("Child not created\n");
-	// }
 
 	return 0;
+}
+
+
+//method to sort the struct depending on arival time.
+void burstAndArrivalSort(struct process pros[]){
+
+	//sorting according burst time.
+	for(int i=0; i<no_process-1; i++){
+		for(int j=i+1; j<no_process; j++){
+
+			if(pros[i].burstTime > pros[j].burstTime){
+				int a = pros[j].burstTime;
+				pros[j].burstTime = pros[i].burstTime;
+				pros[i].burstTime = a;
+			}
+
+		}
+	}
+
+
+	//sorting on arrival time.
+	for(int i=0; i<no_process-1; i++){
+		for(int j=i+1; j<no_process; j++){
+
+			if(pros[i].arvTime > pros[j].arvTime){
+				int a = pros[j].arvTime;
+				pros[j].arvTime = pros[i].arvTime;
+				pros[i].arvTime = a;
+			}
+
+		}
+	}
+
 }
