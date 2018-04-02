@@ -1,7 +1,11 @@
 #include<stdio.h>
 
-int counter = 0;
-int no_process = 0;						//no of process
+int processTime = 0;			//->stores the current execution time.
+int no_process = 0;				//->no of process
+
+void sortOnArrivalT(struct process pros[]);
+void startProcessing(struct process process[]);
+void printProcess(struct process pros[]);
 
 struct process{
 	int id;
@@ -11,8 +15,6 @@ struct process{
 	int priority ;
 };
 
-void sortOnArrivalT(struct process pros[]);
-void printProcess(struct process pros[]);
 
 int main(){
 
@@ -89,10 +91,26 @@ void sortOnArrivalT(struct process pros[]){
 }
 
 
+//process algo.
 void startProcessing(struct process pros[]){
 
-	
-	
+	int i = 0;    //process index starts for 0
+
+	while(i < no_process){
+
+		sturct process topProcess = pros[i++];
+		processTime =+ topProcess.burstTime;
+
+		updateProcesses(pros,)
+
+	}	
+
+}
+
+
+struct process getTopProcess(int i){
+
+
 }
 
 //method to pring the process.

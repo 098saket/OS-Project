@@ -5,7 +5,7 @@ int main(){
 	int a =10;
 	int i =0;
 
-	while(a--){
+	while(i < a){
 		i++;
 	}
 
