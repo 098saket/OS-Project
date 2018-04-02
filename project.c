@@ -4,13 +4,15 @@ int counter = 0;
 int no_process = 0;						//no of process
 
 struct process{
+	int id;
 	int arvTime ;
 	int burstTime ;
 	int waitTime ;
 	int priority ;
 };
 
-void burstAndArrivalSort(struct process pros[]);
+void sortOnArrivalT(struct process pros[]);
+void printProcess(struct process pros[]);
 
 int main(){
 
@@ -29,7 +31,9 @@ int main(){
 	for(int i=0; i<no_process; i++){
 
 		printf("Enter the input for Process %d\n", i+1 );
-		
+		pros[i].id = i+1;
+		pros[i].waitTime = 0;
+		pros[i].priority = 1;
 		//arvTime
 		pros[i].arvTime = 0;
 		while(pros[i].arvTime > -1){
@@ -51,46 +55,51 @@ int main(){
 			if(pros[i].burstTime > -1)
 				break;
 		}
+
+		printf("\n");
 	}
 
-	burstAndArrivalSort(pros);
 
-	for(int i=0; i<no_process; i++){
-		printf("%d arival time : %d  burstTime : %d\n", i+1, pros[i].arvTime, pros[i].burstTime);
-	}
+	sortOnArrivalT(pros);
+
+	startProcessing(pros);
+
+	printProcess(pros);
 
 	return 0;
 }
 
 
-//method to sort the struct depending on arival time.
-void burstAndArrivalSort(struct process pros[]){
-
-	//sorting according burst time.
-	for(int i=0; i<no_process-1; i++){
-		for(int j=i+1; j<no_process; j++){
-
-			if(pros[i].burstTime > pros[j].burstTime){
-				int a = pros[j].burstTime;
-				pros[j].burstTime = pros[i].burstTime;
-				pros[i].burstTime = a;
-			}
-
-		}
-	}
-
+//method to sort the struct depending on arival time and burst time.
+void sortOnArrivalT(struct process pros[]){
 
 	//sorting on arrival time.
 	for(int i=0; i<no_process-1; i++){
 		for(int j=i+1; j<no_process; j++){
 
 			if(pros[i].arvTime > pros[j].arvTime){
-				int a = pros[j].arvTime;
-				pros[j].arvTime = pros[i].arvTime;
-				pros[i].arvTime = a;
+				struct process a = pros[j];
+				pros[j] = pros[i];
+				pros[i] = a;
 			}
 
 		}
+	}
+
+}
+
+
+void startProcessing(struct process pros[]){
+
+	
+	
+}
+
+//method to pring the process.
+void printProcess(struct process pros[]){
+
+	for(int i=0; i<no_process; i++){
+		printf("Proccess :%d \narivlTime : %d  \nburstTime : %d\n\n", pros[i].id, pros[i].arvTime, pros[i].burstTime);
 	}
 
 }
