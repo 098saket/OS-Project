@@ -3,17 +3,19 @@
 int processTime = 0;			//->stores the current execution time.
 int no_process = 0;				//->no of process
 
-void sortOnArrivalT(struct process pros[]);
-void startProcessing(struct process process[]);
-void printProcess(struct process pros[]);
-
 struct process{
 	int id;
 	int arvTime ;
 	int burstTime ;
 	int waitTime ;
-	int priority ;
+	float priority ;
 };
+
+void sortOnArrivalT(struct process pros[]);
+void startProcessing(struct process pros[]);
+void updateProcesses(struct process pros[], int processTime, int currentProcess);
+void printProcess(struct process pros[]);
+
 
 
 int main(){
@@ -94,30 +96,53 @@ void sortOnArrivalT(struct process pros[]){
 //process algo.
 void startProcessing(struct process pros[]){
 
-	int i = 0;    //process index starts for 0
+	int currentProcess = 0;    //process index starts for 0
 
-	while(i < no_process){
+	while(currentProcess < no_process){
 
-		sturct process topProcess = pros[i++];
+		struct process topProcess = pros[currentProcess++];
 		processTime =+ topProcess.burstTime;
 
-		updateProcesses(pros,)
+		updateProcesses(pros,processTime,currentProcess);
 
 	}	
 
 }
 
 
-struct process getTopProcess(int i){
+//method to update process queue 'pors[]'
+void updateProcesses(struct process pros[], int processTime, int currentProcess){
 
+	//update the priority of each process depenting on waitTime and execution time.
+	for(int i = currentProcess; i<no_process; i++){
+		
+		float waitTime = processTime - pros[i].arvTime;
+		pros[i].priority = 1  + waitTime/(float)pros[i].burstTime;
+
+	}
+
+	//sort process in decending order on priority.
+	for(int i=currentProcess; i<no_process-1; i++){
+		for(int j=i+1; j<no_process; j++){
+
+			if(pros[i].priority < pros[j].priority){
+				struct process a = pros[j];
+				pros[j] = pros[i];
+				pros[i] = a;
+			}
+
+		}
+	}
 
 }
+
+
 
 //method to pring the process.
 void printProcess(struct process pros[]){
 
 	for(int i=0; i<no_process; i++){
-		printf("Proccess :%d \narivlTime : %d  \nburstTime : %d\n\n", pros[i].id, pros[i].arvTime, pros[i].burstTime);
+		printf("Proccess :%d arivlTime : %d  burstTime : %d\n\n", pros[i].id, pros[i].arvTime, pros[i].burstTime);
 	}
 
 }

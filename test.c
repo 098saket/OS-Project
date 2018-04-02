@@ -2,15 +2,9 @@
 
 int main(){
 
-	int a =10;
-	int i =0;
-
-	while(i < a){
-		i++;
-	}
-
-	printf("Process executed %d times\n",i );
-
+	int i = 3;
+	float ans = 1 + 14/(float)i;
+	printf("%f\n",ans);
 	return 0;
 
 
